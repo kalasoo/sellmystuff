@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sell my stuffs | Ming</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+	<link rel="stylesheet" href="/src/main.css">
+	<link rel="stylesheet" href="/src/lightbox.css">
+	<link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Dosis' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="pure-g-r" id="main">
+	<div class="header pure-u-1">
+		<h2 class="pure-u-1">Sell my stuffs before graduation</h2>
+		<h4 class="pure-u-1"><i>“No one is useless in this world who lightens the burdens of another.” - Charles Dickens</i></h4>
+	</div>
+	<div class="content">
+		<div class="pure-g-r">
+			<div class="pure-u-1 progress-bar">
+				{% if stat.item_ratio > 0.5 %}
+				<div class="inner hot" style="width:{{stat.item_ratio}}%"></div>
+				{% else %}
+				<div class="inner" style="width:{{stat.item_ratio}}%"></div>
+				{% endif %}
+			</div>
+			<div class="pure-u-1 progress-caption">
+				<div class="inner" style="left:{{stat.item_ratio}}%"> {{stat.item_sold}}/{{stat.item_num}} of items are sold</div>
+			</div>
+		</div>
+		<div class="pure-g-r">
+			<div class="pure-u-1-2 c-box">
+				{% if user %}
+				<p>Hi, {{user.nickname()}}</p>
+				{% else %}
+				<p>Hi, please login to your <b>gmail account</b> before selecting.</p>
+				<p>There are {{ stat.item_total_buyer }} buyers in total, ASAP!</p>
+				{% endif %}
+				{% if isAdmin %}
+				<a href="/add_item" class="pure-button pure-button-primary"> Add a new Item</a>
+				{% endif %}
+			</div>
+			<div class="pure-u-1-2 c-box">
+				<p><a href="{{ user_url }}" class="pure-button">{{ user_url_linktext }}</a></p>
+			</div>
+		</div>
+		{% if user %}
+			{% if has_items %}
+			<div class="pure-g-r">
+				<div class="pure-u-1">
+					<table class="pure-table pure-table-horizontal item_table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th># of buyers</th>
+							<th>Confirmed?</th>
+							<th>Final Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for item in my_confirmed_items %}
+						<tr>
+							<td>{{ item.name }}</td>
+							<td>{{ item.buyer_num }}</td>
+							<td>✔</td>
+							<td>$ {{ item.current_price }}</td>
+						</tr>
+						{% endfor %}
+						{% for item in my_items %}
+						<tr>
+							<td>{{ item.name }}</td>
+							<td>{{ item.buyer_num }}</td>
+							<td>✘</td>
+							<td>$ {{ item.current_price }}</td>
+						</tr>
+						{% endfor %}
+						<tr class="total_price">
+							<td>Total</td>
+							<td> - </td>
+							<td> - </td>
+							<td>$ {{ my_total_price }}</td>
+						</tr>
+					</tbody>
+					</table>
+				</div>
+				<div class="pure-u-1">
+						<a href="/confirm"><button class="pure-button pure-button-primary confirm_button">Confirm!!!</button></a>
+						<p>Once you confirm your selections, an email will be sent to you for information and your selected items will no longer be presented on the website. Please contact me: <strong>ym.kalasoo@gmail.com</strong> to pick up your items and pay the money.</p>
+				</div>
+			</div>
+			{% endif %}
+		<div class="item_list">
+			<div class="pure-g-r">
+				{% for item in items %}
+				<div class="pure-u-1-3">
+					<div class="l-box">
+						<div class="item_box">
+							{% if item.is_mine %}
+							<div class="status item_mine c-box">MINE</div>
+							{% elif item.is_free %}
+							<div class="status item_free c-box">FREE</div>
+							{% elif item.is_hot %}
+							<div class="status item_hot c-box">HOT</div>
+							{% else%}
+							<div class="status c-box"></div>
+							{% endif %}
+							<div class="l-box l-box-not-bottom c-box">
+								<a href="/imgs/{{ item.picture }}" rel="lightbox[items]" title="{{ item.name }}">
+									<img class="item_img" src="/imgs/{{ item.picture }}" title="{{ item.name }}">
+								</a>
+							</div>
+							<div class="l-box item_info">
+								<h3 class="item_title">{{ item.item_type }} - {{ item.name }}</h3>
+								<p class="content-quote item_desc">{{ item.description }}</p>
+								{% if item.buyer_num %}
+									{% if item.buyer_num > 1 %}
+									<h3> {{item.buyer_num}} people want this item.</h3>
+									{% else %}
+									<h3> {{item.buyer_num}} person wants this item.</h3>
+									{% endif %}
+								{% elif item.is_free %}
+									<h3> Holy shit!!! This is free!!!</h3>
+								{% else %}
+								<h3> No one wants this item, are you sure?</h3>
+								{% endif %}
+								<div class="pure-g-r">
+									<div class="c-box">
+										<div class="pure-u-1-2">Original Price</div>
+										<div class="pure-u-1-2">Current Price</div>
+									</div>
+								</div>
+								<div class="pure-g-r">
+									<div class="c-box">
+										<div class="pure-u-1-2">${{ item.origin_price }}</div>
+										<div class="pure-u-1-2 current_price">${{ item.current_price }}</div>
+									</div>
+								</div>
+								{% if item.is_mine %}
+								<div class="want_it">
+									<p>I will notify you when this item is confirmed to be yours!</p>
+								</div>
+								{% elif item.is_free and item.buyer_num %}
+								<div class="want_it">
+									<p>Sorry, someone has been too fast~~~</p>
+								</div>
+								{% else %}
+								<div class="want_it panel">
+									<div class="front">
+										<button class="pure-button want_button pure-button-primary">Want!!!</button>
+									</div>
+									<div class="back">
+										<form class="pure-form want_form" action="/want_buy" method="POST">
+											<input name="item_id" type="hidden" value="{{item.key.id()}}" required>
+											{% if item.is_free %}
+											<button type="submit" class="pure-button want_button pure-button-primary">This is free, get it now bitch!</button>
+											<p></p>
+											{% else %}
+											<button type="submit" class="pure-button want_button pure-button-primary">With only $1 more, click and confirm!</button>
+											{% endif %}
+										</form>
+									</div>
+								</div>
+								{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endif %}
+	</div>
+</div>
+<script src="/src/jquery.min.js"></script>
+<script src="/src/lightbox.js"></script>
+<script>
+(function($) {
+	$('.want_button').click(function() {
+		$(this).closest('.want_it').addClass('flip');
+	})
+	$('.want_form').submit(function() {
+		$form = $(this)
+		$.post('/want_buy', $form.serialize(), function(res) {
+			res = JSON.parse(res);
+			if (res['done']) {
+				$form.closest('.item_info').find('.current_price').text('$' + res.current_price);
+				$form.closest('.item_box').find('.status').removeClass('item_hot').removeClass('item_free').addClass('item_mine').text('MINE');
+			}
+		})
+		return false;
+	})
+})(jQuery)
+</script>
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-37921081-2', 'sellmystuffym.appspot.com');
+	ga('send', 'pageview');
+</script>
+</body>
+</html>

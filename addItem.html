@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sell my stuffs | Add</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.1.0/pure-min.css">
+	<link rel="stylesheet" href="/src/main.css">
+	<link href='http://fonts.googleapis.com/css?family=Cardo:400,400italic,700' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="pure-g-r" id="main">
+	<div class="header pure-u-1">
+		<h2 class="pure-u-1">Oh my goodness, another stuff bought useless</h2>
+	</div>
+	<div class="content">
+		<div class="pure-g-r">
+		<div class="pure-u-1">
+		<form class="pure-form pure-form-stacked" method="POST">
+		<fieldset>
+			<legend>Add a new item</legend>
+
+			<label for="item_name">Name</label>
+			<input id="item_name" name="item_name" type="text" placeholder="Item Name" required>
+
+			<label for="item_type">Type</label>
+			<select id="item_type" name="item_type" required>
+				<option selected="selected">Book</option>
+				<option>Electronic Product</option>
+				<option>Stationery</option>
+				<option>Other</option>
+			</select>
+
+			<label for="item_desc">Description</label>
+			<input id="item_desc" name="item_desc" type="text" placeholder="Something stupid" class="pure-input-1">
+
+			<label for="origin_price">Original Price</label>
+			<input id="origin_price" name="origin_price" type="number" placeholder="SO FUCKING Expensive" class="pure-input-1-3" required>
+
+			<label for="start_price">Start Price</label>
+			<select id="start_price" name="start_price" required>
+				<option>0</option>
+				<option>1</option>
+				<option>10</option>
+				<option selected="selected">20</option>
+				<option>50</option>
+				<option>100</option>
+			</select>
+
+			<label for="picture">Picture</label>
+			<input id="picture" name="picture" type="text" placeholder="PICTURE NAME" class="pure-input-1-3" required>
+
+			<label>Add it now</label>
+			<button type="submit" class="pure-button">Add</button>
+			</fieldset>
+		</form>
+		</div>
+		</div>
+	</div>
+</div>
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	ga('create', 'UA-37921081-2', 'sellmystuffym.appspot.com');
+	ga('send', 'pageview');
+</script>
+</body>
+</html>

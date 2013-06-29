@@ -1,0 +1,29 @@
+application: sellmystuffym
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /src
+  static_dir: src
+
+- url: /imgs
+  static_dir: imgs
+
+- url: /images
+  static_dir: images
+
+- url: .*
+  script: main.app
+
+libraries:
+- name: webapp2
+  version: latest
+
+- name: jinja2
+  version: latest
